@@ -1,0 +1,57 @@
+<script type="text/ng-template" id="tree_item_renderer.html">
+  <button class="btn btn-xs btn-success" ng-click="getData(data)">+</button>
+  {{data.referer}}
+  <div class="loader" ng-if="data.isLoading"></div>
+  <ul>
+    <li class="linkElement" ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></li>
+  </ul>
+</script>
+
+
+<style>
+.siteElement {
+  font-size: 18px;
+  padding-bottom: 15px;
+}
+.
+.linkElement {
+  padding-bottom: 10px;
+}
+.loader {
+  float: right;
+    border: 6px solid #f3f3f3; /* Light grey */
+    border-top: 6px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+<div class="jumbotron">
+  <h1>Super Crawler <br> is here!</h1>
+  <p class="lead">
+    Always Spying you! ;)
+  </p>
+  <p><input class="form-control" ng-model="tree[0].referer" placeholder="Url to spy"/> </p>
+</div>
+
+<div class="row marketing">
+  <h4>League athletics</h4>
+  <p>
+    A Simple sample program to crawler sites
+  </p>
+</div>
+
+<div class="row result">
+  <h4>Results</h4>
+  <p>
+    <ul>
+      <li class="siteElement" ng-repeat="data in tree" ng-include="'tree_item_renderer.html'"></li>
+    </ul>
+  </p>
+</div>
