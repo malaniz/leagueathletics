@@ -1,5 +1,4 @@
 <script type="text/ng-template" id="tree_item_renderer.html">
-  <button class="btn btn-xs btn-success" ng-click="getData(data)">+</button>
   {{x.url}}
   <ul>
     <li class="linkElement" ng-repeat="x in x.childs" ng-include="'tree_item_renderer.html'"></li>
