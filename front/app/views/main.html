@@ -1,9 +1,8 @@
 <script type="text/ng-template" id="tree_item_renderer.html">
   <button class="btn btn-xs btn-success" ng-click="getData(data)">+</button>
-  {{data.referer}}
-  <div class="loader" ng-if="data.isLoading"></div>
+  {{x.url}}
   <ul>
-    <li class="linkElement" ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></li>
+    <li class="linkElement" ng-repeat="x in x.childs" ng-include="'tree_item_renderer.html'"></li>
   </ul>
 </script>
 
@@ -37,21 +36,30 @@
   <p class="lead">
     Always Spying you! ;)
   </p>
-  <p><input class="form-control" ng-model="tree[0].referer" placeholder="Url to spy"/> </p>
+  <div class="row">
+    <div class="col-md-10">
+      <input class="form-control" ng-model="url" placeholder="Url to spy"/> </p>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-success" ng-click="getData(url)">Go!</button>
+    </div>
+  </div>
+  
 </div>
 
 <div class="row marketing">
   <h4>League athletics</h4>
   <p>
-    A Simple sample program to crawler sites
+    A sample crawler program 
   </p>
 </div>
 
 <div class="row result">
-  <h4>Results</h4>
+  <div class="loader" ng-if="isLoading"></div>
+  <h4 ng-if="data">Results</h4>
   <p>
     <ul>
-      <li class="siteElement" ng-repeat="data in tree" ng-include="'tree_item_renderer.html'"></li>
+      <li class="siteElement" ng-repeat="x in data.childs" ng-include="'tree_item_renderer.html'"></li>
     </ul>
   </p>
 </div>
