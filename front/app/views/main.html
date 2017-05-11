@@ -1,36 +1,25 @@
 <script type="text/ng-template" id="tree_item_renderer.html">
+  <div ui-tree-handle class="tree-node tree-node-content">
+  <a 
+    class="btn btn-success btn-xs" 
+    ng-if="x.childs && x.childs.length > 0" 
+    data-nodrag 
+    ng-click="togg(this)"
+  >
+    <span
+      class="glyphicon"
+      ng-class="{ 'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"
+    >
+    </span>
+  </a>
   {{x.url}}
-  <ul>
-    <li class="linkElement" ng-repeat="x in x.childs" ng-include="'tree_item_renderer.html'"></li>
-  </ul>
+  </div>
+  <ol ui-tree-nodes="" ng-model="x.childs" ng-class="{hidden: collapsed}">
+    <li ng-repeat="x in x.childs" ui-tree-node ng-include="'tree_item_renderer.html'"></li>
+  </ol>
 </script>
 
-
-<style>
-.siteElement {
-  font-size: 18px;
-  padding-bottom: 15px;
-}
-.
-.linkElement {
-  padding-bottom: 10px;
-}
-.loader {
-  float: right;
-    border: 6px solid #f3f3f3; /* Light grey */
-    border-top: 6px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
-<div class="jumbotron">
+<div class="jumbotron" ng-if="step === 1">
   <h1>Super Crawler <br> is here!</h1>
   <p class="lead">
     Always Spying you! ;)
@@ -45,28 +34,26 @@
   </div>
 </div>
 
-<div class="row marketing">
+<div class="row " ng-if="step === 2">
+  <button class="btn btn-success pull-right" ng-click="goBack()">Back</button>
   <h4>League athletics</h4>
   <p>
-    A sample crawler program 
+  A sample crawler program 
   </p>
-</div>
 
-<div class="row result">
-  <div class="loader" ng-if="isLoading"></div>
   <h4 ng-if="data">Results</h4>
   <div class="row">
     <div class="col-md-10">
       <input class="form-control" ng-model="searchurl" placeholder="Search" /> </p>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-success" ng-click="search(searchurl)">Go!</button>
+      <button class="btn btn-success" ng-click="deepfilter(data, searchurl)">Go!</button>
     </div>
   </div>
 
-  <p>
-    <ul>
-      <li class="siteElement" ng-repeat="x in data.childs | recfilter:searchurl" ng-include="'tree_item_renderer.html'"></li>
-    </ul>
-  </p>
+  <div ui-tree>
+    <ol ui-tree-nodes="" ng-model="data.childs" id="tree-root">
+      <li ng-repeat="x in data.childs" ui-tree-node ng-include="'tree_item_renderer.html'"></li>
+    </ol>
+  </div>
 </div>
